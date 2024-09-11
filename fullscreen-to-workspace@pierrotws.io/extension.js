@@ -85,7 +85,6 @@ export default class FullscreenToWorkspaceExtension extends Extension {
     //this._settings = extensionObject.getSettings();
     // Listen for window maximization
     let self = this;
-    console.error(JSON.stringify(Meta.MaximizeFlags));
     this._onMaximizeListener = global.window_manager.connect(
       "size-changed",
       (wm, actor) => {
