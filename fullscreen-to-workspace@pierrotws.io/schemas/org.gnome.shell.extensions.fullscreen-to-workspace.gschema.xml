@@ -1,0 +1,19 @@
+<!--
+    Strings for "type"-attribute: https://docs.gtk.org/glib/gvariant-format-strings.html
+-->
+<schemalist>
+  <schema id="org.gnome.shell.extensions.fullscreen-to-workspace" path="/org/gnome/shell/extensions/fullscreen-to-workspace/">
+    <!-- Boolean for Fullscreen to new workspace -->
+    <key name="on-fullscreen" type="b">
+      <default>true</default>
+      <summary>Fullfscreen to New Workspace</summary>
+      <description>When set to true, fullscreen windows will be moved to a new workspace and switch to it automatically.</description>
+    </key>
+    <!-- Boolean for Maximize to new workspace -->
+    <key name="on-maximize" type="b">
+      <default>true</default>
+      <summary>Maximize to New Workspace</summary>
+      <description>When set to true, maximized windows will be moved to a new workspace and switch to it automatically.</description>
+    </key>
+  </schema>
+</schemalist>
