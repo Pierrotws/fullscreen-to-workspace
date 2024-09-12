@@ -24,20 +24,14 @@ import Meta from "gi://Meta";
 
 export default class FullscreenToWorkspaceExtension extends Extension {
   onMaximized(window) {
-    //this._onMaximize = this._settings.get_boolean("on-maximize");
     if (window.get_maximized() === Meta.MaximizeFlags.BOTH) {
       this._moveWindowIfNeeded(window);
-    } else {
-      console.debug("window not maximized, ignore");
     }
   }
 
   onFullscreen(window) {
-    // this._onFullscreen = settings.get_boolean("on-fullscreen");
     if (window.is_fullscreen()) {
       this._moveWindowIfNeeded(window);
-    } else {
-      console.debug("window not fullscreen, ignore");
     }
   }
 
@@ -53,21 +47,16 @@ export default class FullscreenToWorkspaceExtension extends Extension {
       let windows = workspace.list_windows();
       //if workspace empty, move window to workspace
       if (windows.length === 0) {
-        console.debug(`workspace #${index} empty, insert window here`);
         //todo: move to that window and return
         this._moveToWorkspace(window, workspace);
         return;
       }
       //if there is only this window in that workspace then do nothing
       else if (windows.length === 1 && windows[0] === window) {
-        console.debug(`window is solo in workspace #${index}, do nothing`);
         return;
-      } else {
-        console.debug(`workspace #${index} not empty, continue`);
       }
     }
     //If here, need to create another workspace
-    console.debug(`no empty workspace found from #${workspaceIndex} to #${numWorkspaces}`);
     manager.append_new_workspace(false, global.get_current_time());
     // Move the window to the new workspace
     let newWorkspace = manager.get_workspace_by_index(numWorkspaces);
@@ -82,28 +71,35 @@ export default class FullscreenToWorkspaceExtension extends Extension {
   }
 
   enable() {
-    //this._settings = extensionObject.getSettings();
+    const settings = this.getSettings();
+    const okMaximize = settings.get_boolean("on-maximize");
+    const okFullscreen = settings.get_boolean("on-fullscreen");
     // Listen for window maximization
-    let self = this;
-    this._onMaximizeListener = global.window_manager.connect(
-      "size-changed",
-      (wm, actor) => {
-        let window = actor.get_meta_window();
-        self.onMaximized(window);
-      },
-    );
+    const self = this;
 
-    // Listen for the "fullscreen" state change
-    this._onFullscreenListener = global.window_manager.connect(
-      "map",
-      (wm, actor) => {
-        let window = actor.get_meta_window();
-        // Add a signal handler to detect state changes (fullscreen)
-        window.connect("notify::fullscreen", () => {
-          self.onFullscreen(window);
-        });
-      },
-    );
+    if (okMaximize) {
+      this._onMaximizeListener = global.window_manager.connect(
+        "size-changed",
+        (wm, actor) => {
+          let window = actor.get_meta_window();
+          self.onMaximized(window);
+        },
+      );
+    }
+
+    if (okFullscreen) {
+      // Listen for the "fullscreen" state change
+      this._onFullscreenListener = global.window_manager.connect(
+        "map",
+        (wm, actor) => {
+          let window = actor.get_meta_window();
+          // Add a signal handler to detect state changes (fullscreen)
+          window.connect("notify::fullscreen", () => {
+            self.onFullscreen(window);
+          });
+        },
+      );
+    }
   }
 
   disable() {

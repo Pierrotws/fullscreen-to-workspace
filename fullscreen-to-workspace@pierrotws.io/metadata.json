@@ -1,7 +1,8 @@
 {
-    "uuid": "fullscreen-to-workspace@pierrotws.io",
-    "name": "Fullscreen To New Workspace",
-    "description": "Moves a Fullscreen window to a new workspace and switches to it.",
-    "shell-version": ["45", "46", "47"],
-    "version": 1
+  "uuid": "fullscreen-to-workspace@pierrotws.io",
+  "name": "Fullscreen To New Workspace",
+  "description": "Moves a Fullscreen window to a new workspace and switches to it.",
+  "shell-version": ["45", "46"],
+  "settings-schema": "org.gnome.shell.extensions.fullscreen-to-workspace",
+  "version": 1
 }
