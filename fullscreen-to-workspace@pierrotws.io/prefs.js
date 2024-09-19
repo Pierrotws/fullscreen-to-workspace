@@ -47,7 +47,7 @@ export default class CaravelExtensionPreferences extends ExtensionPreferences {
     // Create a new preferences row
     const fullscreen = new Adw.SwitchRow({
       title: _("On Fullscreen"),
-      subtitle: _("Set workspace on fullscreen"),
+      subtitle: _("Create workspace on fullscreen"),
     });
     group.add(fullscreen);
     settings.bind(
@@ -60,7 +60,7 @@ export default class CaravelExtensionPreferences extends ExtensionPreferences {
     // Create a new preferences row
     const maximize = new Adw.SwitchRow({
       title: _("On Maximize"),
-      subtitle: _("Set workspace on maximize"),
+      subtitle: _("Create workspace on maximize"),
     });
     group.add(maximize);
     settings.bind(
